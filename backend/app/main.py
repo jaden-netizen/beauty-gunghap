@@ -36,19 +36,29 @@ DB_URL = os.getenv("DB_URL")
 # ── DB 연결 풀 ─────────────────────────────────────────
 @app.on_event("startup")
 async def startup():
-    ssl_ctx = ssl_module.create_default_context()
-    ssl_ctx.check_hostname = False
-    ssl_ctx.verify_mode = ssl_module.CERT_NONE
-    app.state.pool = await asyncpg.create_pool(
-        DB_URL, min_size=1, max_size=10, ssl=ssl_ctx,
-        statement_cache_size=0,
-    )
+    app.state.pool = None
+    app.state.db_error = None
+    try:
+        ssl_ctx = ssl_module.create_default_context()
+        ssl_ctx.check_hostname = False
+        ssl_ctx.verify_mode = ssl_module.CERT_NONE
+        app.state.pool = await asyncpg.create_pool(
+            DB_URL, min_size=1, max_size=10, ssl=ssl_ctx,
+            statement_cache_size=0,
+        )
+        print("DB 연결 성공")
+    except Exception as e:
+        app.state.db_error = str(e)
+        print(f"DB 연결 실패 (서버는 계속 실행): {e}")
 
 @app.on_event("shutdown")
 async def shutdown():
-    await app.state.pool.close()
+    if app.state.pool:
+        await app.state.pool.close()
 
 async def get_db():
+    if not app.state.pool:
+        raise HTTPException(503, f"DB 연결 불가: {app.state.db_error}")
     async with app.state.pool.acquire() as conn:
         yield conn
 
@@ -257,7 +267,13 @@ async def calc_best3(
 # ── 헬스체크 ───────────────────────────────────────────
 @app.get("/health")
 async def health():
-    return {"status": "ok", "service": "뷰티궁합 API"}
+    db_ok = app.state.pool is not None
+    return {
+        "status": "ok",
+        "service": "뷰티궁합 API",
+        "db": "connected" if db_ok else "disconnected",
+        "db_error": app.state.db_error if not db_ok else None,
+    }
 
 # ── 유틸 ───────────────────────────────────────────────
 def _row_to_hospital(r) -> HospitalOut:
