@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.env
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+
+# Node
+node_modules/
+.next/
+out/
+npm-debug.log*
+
+# 환경변수
+.env.local
+.env.*.local
+backend/.env
+scripts/.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# 데이터 (CSV는 용량이 커서 제외)
+scripts/data/*.csv
