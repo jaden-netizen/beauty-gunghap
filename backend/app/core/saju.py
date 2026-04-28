@@ -236,8 +236,9 @@ def calc_ilgan_score(c_day_h: int, h_day_h: int) -> int:
     if (h_e,c_e) in SAMGUK:          return 4
     return 10
 
-def get_grade(score: int) -> tuple[str, str]:
-    if score >= 90: return "천생연분", "Destined"
+def get_grade(score: int, relation: str = "중립") -> tuple[str, str]:
+    # 천생연분은 상생 관계일 때만 가능
+    if score >= 90 and relation == "상생": return "천생연분", "Destined"
     if score >= 75: return "매우 좋음", "Very Good"
     if score >= 60: return "좋음",     "Good"
     if score >= 45: return "보통",     "Average"
@@ -308,18 +309,34 @@ def calculate_compatibility(
     s4 = calc_ilgan_score(c_saju.day_heavenly, h_saju.day_heavenly)
 
     total = s1 + s2 + s3 + s4
-    grade, grade_en = get_grade(total)
     relation = get_element_relation(c_elem, h_elem)
+
+    # 상극 페널티: 주된 오행 강도에 따라 15~20점 차감, 최대 75점 캡
+    if relation == "상극":
+        c_main_idx = c_elem.index(max(c_elem))
+        h_main_idx = h_elem.index(max(h_elem))
+        strength = min(c_elem[c_main_idx], h_elem[h_main_idx])
+        penalty = min(20, 14 + strength)  # strength 1→15, 2→16, ... 6→20
+        total = min(75, max(0, total - penalty))
+
+    grade, grade_en = get_grade(total, relation)
     best, avoid = get_best_months(c_saju, h_saju, current_year)
 
     c_main = ELEMENT_NAMES[c_elem.index(max(c_elem))]
     h_main = ELEMENT_NAMES[h_elem.index(max(h_elem))]
     best_str = "·".join(f"{m}월" for m in best)
 
-    summary = (
-        f"{c_main}이 강한 당신과 {h_main} 기운의 이 병원은 "
-        f"{relation} 관계입니다. {best_str}이 최적 방문 시기예요."
-    )
+    if relation == "상극":
+        summary = (
+            f"{c_main}이 강한 당신과 {h_main} 기운의 이 병원은 "
+            f"상극 관계로 주의가 필요합니다. "
+            f"시술 전 충분한 상담을 권장하며, {best_str}에는 상극의 영향이 다소 완화됩니다."
+        )
+    else:
+        summary = (
+            f"{c_main}이 강한 당신과 {h_main} 기운의 이 병원은 "
+            f"{relation} 관계입니다. {best_str}이 최적 방문 시기예요."
+        )
 
     return CompatibilityResult(
         total=total,
