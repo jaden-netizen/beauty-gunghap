@@ -30,7 +30,7 @@ export default function AnalyzePage() {
   const [result, setResult]        = useState<any>(null);
   const [loading, setLoading]      = useState(false);
 
-  const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+  const API = process.env.NEXT_PUBLIC_API_URL ?? "https://beauty-gunghap-production.up.railway.app";
 
   // 병원 검색
   const searchHospitals = async () => {
