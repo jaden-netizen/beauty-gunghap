@@ -97,7 +97,7 @@ def clean_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     # 2. 피부과 or 성형외과만
     if "specialties" in df.columns:
         mask = df["specialties"].fillna("").apply(
-            lambda x: any(s in x for s in TARGET_SPECIALTIES)
+            lambda x: any(s.strip() in TARGET_SPECIALTIES for s in x.split(","))
         )
         df = df[mask]
     else:
