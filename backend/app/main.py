@@ -43,7 +43,10 @@ async def startup():
     ssl_ctx = ssl_module.create_default_context()
     ssl_ctx.check_hostname = False
     ssl_ctx.verify_mode = ssl_module.CERT_NONE
-    app.state.pool = await asyncpg.create_pool(DB_URL, min_size=2, max_size=10, ssl=ssl_ctx)
+    app.state.pool = await asyncpg.create_pool(
+        DB_URL, min_size=1, max_size=10, ssl=ssl_ctx,
+        statement_cache_size=0,
+    )
 
 @app.on_event("shutdown")
 async def shutdown():
