@@ -236,6 +236,13 @@ def calc_ilgan_score(c_day_h: int, h_day_h: int) -> int:
     if (h_e,c_e) in SAMGUK:          return 4
     return 10
 
+def _ko_particle(word: str, vowel_form: str, consonant_form: str) -> str:
+    """마지막 한글 음절의 받침 여부로 조사 선택 (이/가, 은/는, 을/를 등)"""
+    for ch in reversed(word):
+        if '가' <= ch <= '힣':
+            return consonant_form if (ord(ch) - 0xAC00) % 28 != 0 else vowel_form
+    return vowel_form
+
 def get_grade(score: int, relation: str = "중립") -> tuple[str, str]:
     # 천생연분은 상생 관계일 때만 가능
     if score >= 90 and relation == "상생": return "천생연분", "Destined"
@@ -326,16 +333,19 @@ def calculate_compatibility(
     h_main = ELEMENT_NAMES[h_elem.index(max(h_elem))]
     best_str = "·".join(f"{m}월" for m in best)
 
+    c_sub = _ko_particle(c_main, "가", "이")   # 주격: 화가/목이
+    b_sub = _ko_particle(best_str, "가", "이") # 최적 시기 주격
+
     if relation == "상극":
         summary = (
-            f"{c_main}이 강한 당신과 {h_main} 기운의 이 병원은 "
+            f"{c_main}{c_sub} 강한 당신과 {h_main} 기운의 이 병원은 "
             f"상극 관계로 주의가 필요합니다. "
             f"시술 전 충분한 상담을 권장하며, {best_str}에는 상극의 영향이 다소 완화됩니다."
         )
     else:
         summary = (
-            f"{c_main}이 강한 당신과 {h_main} 기운의 이 병원은 "
-            f"{relation} 관계입니다. {best_str}이 최적 방문 시기예요."
+            f"{c_main}{c_sub} 강한 당신과 {h_main} 기운의 이 병원은 "
+            f"{relation} 관계입니다. {best_str}{b_sub} 최적 방문 시기예요."
         )
 
     return CompatibilityResult(
