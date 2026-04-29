@@ -96,16 +96,17 @@ class ElementOut(BaseModel):
     hospital_count: int
 
 class CompatibilityOut(BaseModel):
-    total:           int
-    grade:           str
-    grade_en:        str
-    summary:         str
-    breakdown:       BreakdownOut
-    elements:        List[ElementOut]
-    best_months:     List[int]
-    avoid_months:    List[int]
-    element_relation: str
-    hospital:        HospitalOut
+    total:                  int
+    grade:                  str
+    grade_en:               str
+    summary:                str
+    breakdown:              BreakdownOut
+    elements:               List[ElementOut]
+    best_months:            List[int]
+    avoid_months:           List[int]
+    element_relation:       str
+    hospital:               HospitalOut
+    customer_day_heavenly:  int
 
 # ── 병원 검색 ──────────────────────────────────────────
 @app.get("/api/hospitals/search", response_model=List[HospitalOut])
@@ -211,6 +212,7 @@ async def calc_compatibility(req: CompatibilityRequest, db = Depends(get_db)):
         avoid_months=result.avoid_months,
         element_relation=result.element_relation,
         hospital=_row_to_hospital(hospital),
+        customer_day_heavenly=result.customer_day_heavenly,
     )
 
 # ── Best 3 추천 (유료) ────────────────────────────────

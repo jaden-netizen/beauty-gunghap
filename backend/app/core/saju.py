@@ -108,6 +108,7 @@ class CompatibilityResult:
     best_months:     list[int]
     avoid_months:    list[int]
     element_relation: str  # "상생" | "상극" | "중립"
+    customer_day_heavenly: int  # 고객 일간 천간 인덱스 0~9
 
 # ── 율리우스 적일 계산 ─────────────────────────────────
 def _julian_day(year: int, month: int, day: int) -> int:
@@ -324,7 +325,7 @@ def calculate_compatibility(
         h_main_idx = h_elem.index(max(h_elem))
         strength = min(c_elem[c_main_idx], h_elem[h_main_idx])
         penalty = min(20, 14 + strength)  # strength 1→15, 2→16, ... 6→20
-        total = min(75, max(0, total - penalty))
+        total = min(74, max(0, total - penalty))
 
     grade, grade_en = get_grade(total, relation)
     best, avoid = get_best_months(c_saju, h_saju, current_year)
@@ -362,4 +363,5 @@ def calculate_compatibility(
         best_months=best,
         avoid_months=avoid,
         element_relation=relation,
+        customer_day_heavenly=c_saju.day_heavenly,
     )
