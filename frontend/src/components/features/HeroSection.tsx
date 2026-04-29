@@ -119,7 +119,7 @@ export default function HeroSection() {
         >
           시술 결과는 병원 실력만의 문제가 아닐 수 있어요.
           <br />
-          나와 궁합이 맞는 병원에서 시술받아 보세요!
+          이제 나와 궁합이 맞는 병원을 확인하고 시술받아 보세요!
         </p>
 
         {/* CTA 버튼 */}
@@ -132,24 +132,6 @@ export default function HeroSection() {
           </Link>
         </div>
 
-        {/* 뱃지 */}
-        <div className="flex items-center justify-center gap-6 mt-12 fade-in-up delay-3">
-          {[
-            { icon: "🔮", text: "오행 분석" },
-            { icon: "📅", text: "시술 시기" },
-            { icon: "⭐", text: "Best 3" },
-          ].map((b) => (
-            <div key={b.text} className="flex items-center gap-2">
-              <span className="text-sm">{b.icon}</span>
-              <span
-                className="text-[11px] tracking-wide"
-                style={{ color: "rgba(255,255,255,0.35)" }}
-              >
-                {b.text}
-              </span>
-            </div>
-          ))}
-        </div>
       </div>
 
       {/* 스크롤 다운 */}
