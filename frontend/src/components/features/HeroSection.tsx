@@ -91,14 +91,6 @@ export default function HeroSection() {
 
       {/* 콘텐츠 */}
       <div className="relative z-10 text-center px-6 max-w-3xl mx-auto">
-        {/* 영문 서브태그 */}
-        <p
-          className="font-['Cormorant_Garamond'] italic text-sm tracking-[0.25em] mb-6 fade-in-up"
-          style={{ color: "var(--gold3)" }}
-        >
-          사주 · 오행 · 뷰티
-        </p>
-
         {/* 메인 헤딩 */}
         <h1
           className="font-['Noto_Serif_KR'] font-light leading-[1.5] mb-4 fade-in-up delay-1"
@@ -131,12 +123,12 @@ export default function HeroSection() {
         </p>
 
         {/* CTA 버튼 */}
-        <div className="flex flex-col sm:flex-row gap-3 justify-center items-center fade-in-up delay-3">
-          <Link href="/analyze" className="btn-primary text-[13px]">
-            무료로 궁합 보기
+        <div className="flex flex-col gap-3 items-center fade-in-up delay-3 w-[300px] mx-auto">
+          <Link href="/analyze" className="btn-primary text-[13px] w-full text-center justify-center">
+            무료로 병원과의 궁합 보기
           </Link>
-          <Link href="/best3" className="btn-secondary text-[13px]">
-            Best 3 병원 찾기&nbsp;&nbsp;₩3,900
+          <Link href="/best3" className="btn-secondary text-[13px] w-full text-center justify-center">
+            나와 궁합이 좋은 병원 3곳 찾기&nbsp;&nbsp;₩3,900
           </Link>
         </div>
 
