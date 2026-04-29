@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
+import { supabase } from "@/lib/supabase";
 
 // ── 상수 ────────────────────────────────────────────────
 const DISTRICTS = [
@@ -128,6 +129,19 @@ export default function Top3Page() {
       const data = await res.json();
       setTop3(data.top3);
       setTotalCalc(data.total_calculated);
+
+      // 로그인 상태이면 히스토리 저장 (백그라운드)
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        if (!session) return;
+        supabase.from("top3_history").insert({
+          user_id: session.user.id,
+          birth_date: birthDate,
+          birth_hour: birthHour,
+          district,
+          specialty,
+          results: data.top3,
+        });
+      });
 
       // 최소 4초 로딩 보장
       const elapsed = Date.now() - startTime.current;
