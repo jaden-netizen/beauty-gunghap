@@ -102,7 +102,7 @@ export default function HeroSection() {
             className="not-italic font-normal"
             style={{ color: "var(--gold2)" }}
           >
-            내 사주와 맞는 병원, 지금 찾아보세요
+            나와 궁합이 맞는 병원, 지금 찾아보세요
           </em>
         </h1>
 
