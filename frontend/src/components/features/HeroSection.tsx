@@ -90,7 +90,7 @@ export default function HeroSection() {
       />
 
       {/* 콘텐츠 */}
-      <div className="relative z-10 text-center px-6 max-w-2xl mx-auto">
+      <div className="relative z-10 text-center px-6 max-w-3xl mx-auto">
         {/* 영문 서브태그 */}
         <p
           className="font-['Cormorant_Garamond'] italic text-sm tracking-[0.25em] mb-6 fade-in-up"
@@ -102,7 +102,7 @@ export default function HeroSection() {
         {/* 메인 헤딩 */}
         <h1
           className="font-['Noto_Serif_KR'] font-light leading-[1.5] mb-4 fade-in-up delay-1"
-          style={{ color: "white", fontSize: "clamp(26px, 5vw, 42px)" }}
+          style={{ color: "white", fontSize: "clamp(22px, 3.5vw, 34px)" }}
         >
           예쁜 결과는 좋은 인연에서 시작돼요
           <br />
