@@ -127,8 +127,8 @@ export default function HeroSection() {
           <Link href="/analyze" className="btn-primary text-[13px] w-full text-center justify-center">
             무료로 병원과의 궁합 보기
           </Link>
-          <Link href="/best3" className="btn-secondary text-[13px] w-full text-center justify-center">
-            나와 궁합이 좋은 병원 3곳 찾기&nbsp;&nbsp;₩3,900
+          <Link href="/top3" className="btn-secondary text-[13px] w-full text-center justify-center">
+            나와 궁합이 좋은 병원 3곳 찾기
           </Link>
         </div>
 

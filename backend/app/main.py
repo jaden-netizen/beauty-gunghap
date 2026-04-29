@@ -287,23 +287,26 @@ async def get_top3(
         idx += 1
 
     where = " AND ".join(conditions)
+
+    # 전체 개수 먼저 확인
+    total_count = await db.fetchval(
+        f"SELECT COUNT(*) FROM hospitals WHERE {where}", *params
+    )
+    if not total_count:
+        raise HTTPException(404, f"{gu}에서 조건에 맞는 병원이 없습니다.")
+
+    # DB 레벨에서 랜덤 200개 샘플링
     rows = await db.fetch(
         f"""SELECT id, name, address, district, phone, specialties,
                    institution_type, doctor_count, license_date,
                    naver_map_url, coord_x, coord_y
             FROM hospitals
             WHERE {where}
-            ORDER BY doctor_count DESC""",
+            ORDER BY RANDOM()
+            LIMIT 200""",
         *params,
     )
-
-    if not rows:
-        raise HTTPException(404, f"{gu}에서 조건에 맞는 병원이 없습니다.")
-
-    # 200개 이상이면 랜덤 샘플링
     sample = list(rows)
-    if len(sample) > 200:
-        sample = random.sample(sample, 200)
 
     # 생년월일 파싱
     try:
@@ -314,8 +317,10 @@ async def get_top3(
     # 각 병원 궁합 계산
     results = []
     for h in sample:
-        lic = h["license_date"]
         try:
+            lic = h["license_date"]
+            if lic is None:
+                continue
             r = calculate_compatibility(
                 birth_year=bd.year, birth_month=bd.month, birth_day=bd.day,
                 birth_hour=hour,

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 
 // ── 상수 ────────────────────────────────────────────────
@@ -89,6 +89,20 @@ export default function Top3Page() {
 
   const API = process.env.NEXT_PUBLIC_API_URL ?? "https://beauty-gunghap-production.up.railway.app";
 
+  // 데이터가 적재된 구 목록을 마운트 시 로드
+  const [availableGu, setAvailableGu] = useState<Set<string>>(new Set());
+  const [guLoading, setGuLoading] = useState(true);
+
+  useEffect(() => {
+    fetch(`${API}/api/districts`)
+      .then((r) => r.json())
+      .then((data: { district: string; count: number }[]) => {
+        setAvailableGu(new Set(data.map((d) => d.district)));
+      })
+      .catch(() => {})
+      .finally(() => setGuLoading(false));
+  }, [API]);
+
   const handleSubmit = async () => {
     if (!birthDate || !district) return;
     setError("");
@@ -106,7 +120,10 @@ export default function Top3Page() {
       const res = await fetch(`${API}/api/top3?${params}`);
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));
-        throw new Error(body.detail ?? "서버 오류");
+        const msg = res.status === 404
+          ? `${district}는 아직 데이터 준비 중이에요. 다른 지역을 선택해주세요.`
+          : (body.detail ?? "서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+        throw new Error(msg);
       }
       const data = await res.json();
       setTop3(data.top3);
@@ -185,21 +202,39 @@ export default function Top3Page() {
 
             {/* 구 선택 */}
             <FormGroup label="지역 선택 (서울)">
-              <div className="grid grid-cols-5 gap-1.5">
-                {DISTRICTS.map((gu) => (
-                  <button key={gu} onClick={() => setDistrict(gu)}
-                    className="py-2 text-[11px] transition-all"
-                    style={{
-                      border: `1px solid ${district === gu ? "var(--gold)" : "var(--cream3)"}`,
-                      background: district === gu ? "rgba(184,146,74,0.08)" : "white",
-                      color: district === gu ? "var(--gold)" : "var(--ink2)",
-                      fontWeight: district === gu ? 500 : 300,
-                      borderRadius: "2px",
-                    }}>
-                    {gu.replace("구", "")}
-                  </button>
-                ))}
-              </div>
+              {guLoading ? (
+                <div className="text-[12px] text-[var(--ink3)] py-3">지역 목록을 불러오는 중...</div>
+              ) : (
+                <div className="grid grid-cols-5 gap-1.5">
+                  {DISTRICTS.map((gu) => {
+                    const hasData = availableGu.size === 0 || availableGu.has(gu);
+                    const isSelected = district === gu;
+                    return (
+                      <button key={gu}
+                        onClick={() => hasData && setDistrict(gu)}
+                        disabled={!hasData}
+                        title={!hasData ? "데이터 준비 중" : undefined}
+                        className="py-2 text-[11px] transition-all relative"
+                        style={{
+                          border: `1px solid ${isSelected ? "var(--gold)" : hasData ? "var(--cream3)" : "var(--cream3)"}`,
+                          background: isSelected ? "rgba(184,146,74,0.08)" : "white",
+                          color: isSelected ? "var(--gold)" : hasData ? "var(--ink2)" : "var(--cream3)",
+                          fontWeight: isSelected ? 500 : 300,
+                          borderRadius: "2px",
+                          cursor: hasData ? "pointer" : "not-allowed",
+                          opacity: hasData ? 1 : 0.45,
+                        }}>
+                        {gu.replace("구", "")}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+              {availableGu.size > 0 && (
+                <p className="text-[10px] text-[var(--ink3)] mt-2">
+                  흐린 버튼은 아직 데이터 준비 중인 지역이에요
+                </p>
+              )}
             </FormGroup>
 
             {/* 병원 종류 */}
