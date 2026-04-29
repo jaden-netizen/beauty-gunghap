@@ -94,11 +94,13 @@ def clean_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     if "closed_date" in df.columns:
         df = df[df["closed_date"].isna() | (df["closed_date"].str.strip() == "")]
 
-    # 2. 피부과 or 성형외과만
+    # 2. 피부과/성형외과 전문 병원만 (다른 진료과목 혼재 시 제외)
     if "specialties" in df.columns:
-        mask = df["specialties"].fillna("").apply(
-            lambda x: any(s.strip() in TARGET_SPECIALTIES for s in x.split(","))
-        )
+        allowed = set(TARGET_SPECIALTIES)
+        def _is_beauty(x):
+            specs = {s.strip() for s in x.split(",") if s.strip()}
+            return bool(specs) and specs.issubset(allowed)
+        mask = df["specialties"].fillna("").apply(_is_beauty)
         df = df[mask]
     else:
         print("  ⚠️  진료과목 컬럼 없음 — 전체 포함")
