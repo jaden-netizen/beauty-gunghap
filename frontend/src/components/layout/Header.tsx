@@ -66,6 +66,7 @@ export default function Header() {
           {[
             { href: "/", label: "홈" },
             { href: "/analyze", label: "궁합 보기" },
+            { href: "/top3", label: "TOP3 찾기" },
           ].map(({ href, label }) => (
             <Link
               key={href}

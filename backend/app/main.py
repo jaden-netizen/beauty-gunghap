@@ -11,6 +11,7 @@ from datetime import date, datetime
 import asyncpg
 import ssl as ssl_module
 import os
+import random
 from dotenv import load_dotenv
 
 from app.core.saju import calculate_compatibility, ELEMENT_NAMES, ELEMENT_COLORS
@@ -265,6 +266,85 @@ async def calc_best3(
             for i, t in enumerate(top3)
         ]
     }
+
+# ── TOP3 추천 (무료) ──────────────────────────────────
+@app.get("/api/top3")
+async def get_top3(
+    birth:         str            = Query(..., description="생년월일 YYYY-MM-DD"),
+    hour:          Optional[int]  = Query(None, ge=0, le=23, description="태어난 시 0~23"),
+    gu:            str            = Query(..., description="서울 구 이름"),
+    hospital_type: Optional[str]  = Query(None, alias="type", description="피부과|성형외과|전체"),
+    db = Depends(get_db),
+):
+    # 병원 조회
+    conditions = ["district = $1"]
+    params: list = [gu]
+    idx = 2
+
+    if hospital_type and hospital_type != "전체":
+        conditions.append(f"specialties ILIKE ${idx}")
+        params.append(f"%{hospital_type}%")
+        idx += 1
+
+    where = " AND ".join(conditions)
+    rows = await db.fetch(
+        f"""SELECT id, name, address, district, phone, specialties,
+                   institution_type, doctor_count, license_date,
+                   naver_map_url, coord_x, coord_y
+            FROM hospitals
+            WHERE {where}
+            ORDER BY doctor_count DESC""",
+        *params,
+    )
+
+    if not rows:
+        raise HTTPException(404, f"{gu}에서 조건에 맞는 병원이 없습니다.")
+
+    # 200개 이상이면 랜덤 샘플링
+    sample = list(rows)
+    if len(sample) > 200:
+        sample = random.sample(sample, 200)
+
+    # 생년월일 파싱
+    try:
+        bd = date.fromisoformat(birth)
+    except ValueError:
+        raise HTTPException(400, "생년월일 형식이 올바르지 않습니다. (YYYY-MM-DD)")
+
+    # 각 병원 궁합 계산
+    results = []
+    for h in sample:
+        lic = h["license_date"]
+        try:
+            r = calculate_compatibility(
+                birth_year=bd.year, birth_month=bd.month, birth_day=bd.day,
+                birth_hour=hour,
+                license_year=lic.year, license_month=lic.month, license_day=lic.day,
+                current_year=datetime.now().year,
+            )
+            results.append({
+                "hospital": _row_to_hospital(h),
+                "total": r.total,
+                "grade": r.grade,
+                "element_relation": r.element_relation,
+                "customer_elements": r.customer_elements,
+                "hospital_elements": r.hospital_elements,
+                "best_months": r.best_months,
+            })
+        except Exception:
+            continue
+
+    if not results:
+        raise HTTPException(500, "궁합 계산 중 오류가 발생했습니다.")
+
+    results.sort(key=lambda x: -x["total"])
+    top3 = results[:3]
+
+    return {
+        "top3": top3,
+        "total_calculated": len(results),
+    }
+
 
 # ── 헬스체크 ───────────────────────────────────────────
 @app.get("/health")

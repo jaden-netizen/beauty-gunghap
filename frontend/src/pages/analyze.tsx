@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CompatibilityResult from "@/components/features/CompatibilityResult";
 
 type Step = "info" | "search" | "result";
@@ -31,6 +31,46 @@ export default function AnalyzePage() {
   const [loading, setLoading]      = useState(false);
 
   const API = process.env.NEXT_PUBLIC_API_URL ?? "https://beauty-gunghap-production.up.railway.app";
+
+  // TOP3 페이지에서 hospital_id + birth_date 쿼리 파람으로 넘어온 경우 자동 계산
+  useEffect(() => {
+    if (!router.isReady) return;
+    const { hospital_id, birth_date, birth_hour } = router.query;
+    if (!hospital_id || !birth_date) return;
+
+    const bd = birth_date as string;
+    const bh = birth_hour as string | undefined;
+    setBirthDate(bd);
+    if (bh) setBirthHour(bh);
+    setStep("search");
+    calcCompatibilityDirect(parseInt(hospital_id as string), bd, bh ?? null);
+  }, [router.isReady]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // TOP3에서 넘어올 때 사용하는 직접 계산 함수 (파람을 직접 받음)
+  const calcCompatibilityDirect = async (hospitalId: number, bd: string, bh: string | null) => {
+    setLoading(true);
+    try {
+      const res = await fetch(`${API}/api/compatibility`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          birth_date:  bd,
+          birth_hour:  bh ? parseInt(bh) : null,
+          birth_type:  "양력",
+          hospital_id: hospitalId,
+        }),
+      });
+      if (!res.ok) throw new Error();
+      const data = await res.json();
+      setResult(data);
+      setStep("result");
+    } catch {
+      alert("궁합 계산 중 오류가 발생했습니다.");
+      setStep("info");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // 병원 검색
   const searchHospitals = async () => {
