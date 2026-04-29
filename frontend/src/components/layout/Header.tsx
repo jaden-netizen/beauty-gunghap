@@ -32,19 +32,12 @@ export default function Header() {
     >
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* 로고 */}
-        <Link href="/" className="flex items-center gap-2.5">
-          <div
-            className="w-6 h-6 rounded-full flex items-center justify-center"
-            style={{ border: "0.5px solid var(--gold)", background: "rgba(184,146,74,0.08)" }}
-          >
-            <span className="font-['Noto_Serif_KR'] text-[10px]" style={{ color: "var(--gold)" }}>궁</span>
-          </div>
-          <span
-            className="font-['Cormorant_Garamond'] text-[17px] tracking-[0.08em]"
-            style={{ color: "white" }}
-          >
-            뷰티궁합
-          </span>
+        <Link href="/" className="flex items-center">
+          <img
+            src="/logo-horizontal-dark.svg"
+            alt="뷰티궁합"
+            style={{ height: "38px", width: "auto" }}
+          />
         </Link>
 
         {/* 네비 */}

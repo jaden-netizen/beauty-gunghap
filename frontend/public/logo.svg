@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 -5 110 110" width="100" height="100">
+  <!-- Outer pentagon -->
+  <polygon points="50,8 90,36 75,80 25,80 10,36"
+    fill="none" stroke="#B8924A" stroke-width="1.2" opacity="0.85"/>
+  <!-- Inner pentagon -->
+  <polygon points="50,27 72,42 64,67 36,67 28,42"
+    fill="none" stroke="#B8924A" stroke-width="0.6" opacity="0.28"/>
+  <!-- Pentagram star lines -->
+  <polygon points="50,8 75,80 10,36 90,36 25,80"
+    fill="none" stroke="#B8924A" stroke-width="0.5" opacity="0.10"/>
+  <!-- Center circle -->
+  <circle cx="50" cy="50" r="17" fill="rgba(184,146,74,0.06)" stroke="#B8924A" stroke-width="1"/>
+  <!-- 美 -->
+  <text x="50" y="50" text-anchor="middle" dominant-baseline="central"
+    font-family="'Noto Serif CJK KR','Noto Serif KR',Batang,'Source Han Serif KR',STSong,serif"
+    font-size="20" fill="#B8924A">美</text>
+  <!-- 木 top -->
+  <circle cx="50" cy="8" r="9" fill="rgba(90,140,58,0.12)" stroke="#5A8C3A" stroke-width="0.8"/>
+  <text x="50" y="8" text-anchor="middle" dominant-baseline="central"
+    font-family="'Noto Serif CJK KR','Noto Serif KR',Batang,STSong,serif"
+    font-size="9" fill="#5A8C3A">木</text>
+  <!-- 火 right-top -->
+  <circle cx="90" cy="36" r="9" fill="rgba(200,72,48,0.12)" stroke="#C84830" stroke-width="0.8"/>
+  <text x="90" y="36" text-anchor="middle" dominant-baseline="central"
+    font-family="'Noto Serif CJK KR','Noto Serif KR',Batang,STSong,serif"
+    font-size="9" fill="#C84830">火</text>
+  <!-- 土 right-bottom -->
+  <circle cx="75" cy="80" r="9" fill="rgba(184,146,74,0.12)" stroke="#B8924A" stroke-width="0.8"/>
+  <text x="75" y="80" text-anchor="middle" dominant-baseline="central"
+    font-family="'Noto Serif CJK KR','Noto Serif KR',Batang,STSong,serif"
+    font-size="9" fill="#B8924A">土</text>
+  <!-- 金 left-bottom -->
+  <circle cx="25" cy="80" r="9" fill="rgba(96,112,144,0.12)" stroke="#607090" stroke-width="0.8"/>
+  <text x="25" y="80" text-anchor="middle" dominant-baseline="central"
+    font-family="'Noto Serif CJK KR','Noto Serif KR',Batang,STSong,serif"
+    font-size="9" fill="#607090">金</text>
+  <!-- 水 left-top -->
+  <circle cx="10" cy="36" r="9" fill="rgba(58,104,152,0.12)" stroke="#3A6898" stroke-width="0.8"/>
+  <text x="10" y="36" text-anchor="middle" dominant-baseline="central"
+    font-family="'Noto Serif CJK KR','Noto Serif KR',Batang,STSong,serif"
+    font-size="9" fill="#3A6898">水</text>
+</svg>

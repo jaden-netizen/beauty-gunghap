@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 268 56" width="268" height="56">
+  <!-- Symbol (nested SVG, 48x48 at (4,4)) -->
+  <svg x="4" y="4" width="48" height="48" viewBox="-5 -5 110 110">
+    <polygon points="50,8 90,36 75,80 25,80 10,36"
+      fill="none" stroke="#B8924A" stroke-width="1.4" opacity="1"/>
+    <polygon points="50,27 72,42 64,67 36,67 28,42"
+      fill="none" stroke="#B8924A" stroke-width="0.7" opacity="0.38"/>
+    <polygon points="50,8 75,80 10,36 90,36 25,80"
+      fill="none" stroke="#B8924A" stroke-width="0.5" opacity="0.14"/>
+    <circle cx="50" cy="50" r="17" fill="rgba(184,146,74,0.10)" stroke="#B8924A" stroke-width="1.1"/>
+    <text x="50" y="50" text-anchor="middle" dominant-baseline="central"
+      font-family="'Noto Serif CJK KR','Noto Serif KR',Batang,STSong,serif"
+      font-size="20" fill="#C8A860">美</text>
+    <circle cx="50" cy="8" r="9" fill="rgba(90,140,58,0.18)" stroke="#6AA844" stroke-width="0.9"/>
+    <text x="50" y="8" text-anchor="middle" dominant-baseline="central"
+      font-family="'Noto Serif CJK KR','Noto Serif KR',Batang,STSong,serif"
+      font-size="9" fill="#7AC050">木</text>
+    <circle cx="90" cy="36" r="9" fill="rgba(200,72,48,0.18)" stroke="#D85840" stroke-width="0.9"/>
+    <text x="90" y="36" text-anchor="middle" dominant-baseline="central"
+      font-family="'Noto Serif CJK KR','Noto Serif KR',Batang,STSong,serif"
+      font-size="9" fill="#E06848">火</text>
+    <circle cx="75" cy="80" r="9" fill="rgba(184,146,74,0.18)" stroke="#C8A860" stroke-width="0.9"/>
+    <text x="75" y="80" text-anchor="middle" dominant-baseline="central"
+      font-family="'Noto Serif CJK KR','Noto Serif KR',Batang,STSong,serif"
+      font-size="9" fill="#C8A860">土</text>
+    <circle cx="25" cy="80" r="9" fill="rgba(96,112,144,0.18)" stroke="#7888A8" stroke-width="0.9"/>
+    <text x="25" y="80" text-anchor="middle" dominant-baseline="central"
+      font-family="'Noto Serif CJK KR','Noto Serif KR',Batang,STSong,serif"
+      font-size="9" fill="#8898B8">金</text>
+    <circle cx="10" cy="36" r="9" fill="rgba(58,104,152,0.18)" stroke="#4878B0" stroke-width="0.9"/>
+    <text x="10" y="36" text-anchor="middle" dominant-baseline="central"
+      font-family="'Noto Serif CJK KR','Noto Serif KR',Batang,STSong,serif"
+      font-size="9" fill="#5888C0">水</text>
+  </svg>
+
+  <!-- 뷰티궁합 -->
+  <text x="62" y="28" dominant-baseline="central"
+    font-family="'Noto Serif CJK KR','Noto Serif KR',Batang,'Source Han Serif KR',serif"
+    font-size="19" fill="#FFFFFF" letter-spacing="0.5">뷰티궁합</text>
+
+  <!-- Divider -->
+  <line x1="146" y1="16" x2="146" y2="40" stroke="#B8924A" stroke-width="0.6" opacity="0.45"/>
+
+  <!-- Beauty & Destiny -->
+  <text x="153" y="28" dominant-baseline="central"
+    font-family="'Cormorant Garamond','Cormorant',Georgia,'Times New Roman',serif"
+    font-style="italic" font-size="12" fill="#B8924A" letter-spacing="0.5">Beauty &amp; Destiny</text>
+</svg>

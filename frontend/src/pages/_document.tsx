@@ -5,6 +5,7 @@ export default function Document() {
     <Html lang="ko">
       <Head>
         <meta charSet="utf-8" />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </Head>
