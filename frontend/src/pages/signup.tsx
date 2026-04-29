@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { signUp } from "@/lib/auth";
 
 function KakaoIcon() {
@@ -48,6 +49,7 @@ function CheckIcon() {
 }
 
 export default function SignupPage() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
@@ -55,7 +57,6 @@ export default function SignupPage() {
   const [showConfirm, setShowConfirm] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [done, setDone] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -77,7 +78,7 @@ export default function SignupPage() {
         : "회원가입에 실패했습니다. 다시 시도해주세요.");
       return;
     }
-    setDone(true);
+    router.push("/analyze");
   };
 
   const inputClass =
