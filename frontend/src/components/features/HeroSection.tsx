@@ -104,13 +104,13 @@ export default function HeroSection() {
           className="font-['Noto_Serif_KR'] font-light leading-[1.5] mb-4 fade-in-up delay-1"
           style={{ color: "white", fontSize: "clamp(26px, 5vw, 42px)" }}
         >
-          시술 병원 고르기 어렵죠? 🔮
+          예쁜 결과는 좋은 인연에서 시작돼요
           <br />
           <em
             className="not-italic font-normal"
             style={{ color: "var(--gold2)" }}
           >
-            아무 병원이나 가면 안 돼요
+            내 사주와 맞는 병원, 지금 찾아보세요
           </em>
         </h1>
 
@@ -125,11 +125,9 @@ export default function HeroSection() {
           className="text-sm font-light leading-[2] mb-10 fade-in-up delay-2"
           style={{ color: "rgba(255,255,255,0.5)" }}
         >
-          괜히 갔다가 결과 별로였던 병원,
+          시술 결과는 병원 실력만의 문제가 아닐 수 있어요.
           <br />
-          사실 나와 사주가 안 맞았던 거예요.
-          <br />
-          생년월일시로 오행 궁합이 맞는 병원을 찾아드릴게요.
+          나와 궁합이 맞는 병원에서 시술받아 보세요!
         </p>
 
         {/* CTA 버튼 */}
