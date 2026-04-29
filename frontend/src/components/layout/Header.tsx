@@ -108,13 +108,33 @@ export default function Header() {
           <div className="flex items-center gap-3">
             <Link
               href="/login"
-              className="text-[12px] tracking-wide transition-colors"
-              style={{ color: "rgba(255,255,255,0.55)" }}
+              className="transition-colors"
+              style={{
+                padding: "7px 20px",
+                borderRadius: "2px",
+                fontSize: "13px",
+                fontWeight: 400,
+                background: "transparent",
+                border: `1px solid ${scrolled ? "rgba(184,146,74,0.5)" : "rgba(184,146,74,0.4)"}`,
+                color: scrolled ? "var(--gold)" : "var(--gold2)",
+              }}
             >
               로그인
             </Link>
-            <Link href="/analyze" className="btn-primary text-[12px] py-2.5 px-5">
-              무료로 시작
+            <Link
+              href="/signup"
+              className="transition-colors"
+              style={{
+                padding: "7px 20px",
+                borderRadius: "2px",
+                fontSize: "13px",
+                fontWeight: 400,
+                background: "var(--gold)",
+                border: "none",
+                color: "white",
+              }}
+            >
+              회원가입
             </Link>
           </div>
         )}
