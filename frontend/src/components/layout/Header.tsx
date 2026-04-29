@@ -3,9 +3,13 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import type { User } from "@supabase/supabase-js";
+import { supabase } from "@/lib/supabase";
+import { signOut } from "@/lib/auth";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
   const isHome = router.pathname === "/";
 
@@ -15,11 +19,28 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleSignOut = async () => {
+    await signOut();
+    router.push("/");
+  };
+
   const bg = isHome
     ? scrolled
       ? "rgba(14,11,26,0.92)"
       : "transparent"
     : "rgba(14,11,26,0.96)";
+
+  const avatarLetter = user?.email?.[0]?.toUpperCase() ?? "?";
 
   return (
     <header
@@ -59,10 +80,44 @@ export default function Header() {
           ))}
         </nav>
 
-        {/* CTA */}
-        <Link href="/analyze" className="btn-primary text-[12px] py-2.5 px-5">
-          무료로 시작
-        </Link>
+        {/* 우측 영역 */}
+        {user ? (
+          <div className="flex items-center gap-3">
+            {/* 아바타 */}
+            <div
+              className="w-8 h-8 rounded-full flex items-center justify-center text-[13px] font-medium"
+              style={{
+                background: "rgba(184,146,74,0.15)",
+                border: "0.5px solid var(--gold)",
+                color: "var(--gold)",
+              }}
+              title={user.email}
+            >
+              {avatarLetter}
+            </div>
+            {/* 로그아웃 */}
+            <button
+              onClick={handleSignOut}
+              className="text-[12px] tracking-wide transition-colors"
+              style={{ color: "rgba(255,255,255,0.45)" }}
+            >
+              로그아웃
+            </button>
+          </div>
+        ) : (
+          <div className="flex items-center gap-3">
+            <Link
+              href="/login"
+              className="text-[12px] tracking-wide transition-colors"
+              style={{ color: "rgba(255,255,255,0.55)" }}
+            >
+              로그인
+            </Link>
+            <Link href="/analyze" className="btn-primary text-[12px] py-2.5 px-5">
+              무료로 시작
+            </Link>
+          </div>
+        )}
       </div>
     </header>
   );
