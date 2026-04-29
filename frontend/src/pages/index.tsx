@@ -35,6 +35,63 @@ function SectionLabel({ en, ko, dark = false }: { en: string; ko: string; dark?:
 }
 
 /* ══════════════════════════════════════════
+   SECTION 1.5 — Service Intro
+══════════════════════════════════════════ */
+const STATS = [
+  { value: "8,842개", label: "병원" },
+  { value: "서울 25개", label: "구" },
+  { value: "100%", label: "사주 기반" },
+];
+
+function IntroSection() {
+  const ref = useReveal();
+  return (
+    <section className="py-20 text-center" style={{ background: "var(--cream2)" }}>
+      <div ref={ref} className="reveal max-w-2xl mx-auto px-6">
+        <h2
+          className="font-['Noto_Serif_KR'] font-bold leading-[1.6] mb-6"
+          style={{ color: "var(--ink)", fontSize: "clamp(20px, 3vw, 26px)" }}
+        >
+          시술 잘 하는 병원은 많아요.
+          <br />
+          근데 왜 결과가 다를까요?
+        </h2>
+
+        <div className="w-8 h-px mx-auto mb-6" style={{ background: "var(--gold)", opacity: 0.5 }} />
+
+        <p
+          className="font-['Noto_Sans_KR'] font-light leading-[2.0] mb-12"
+          style={{ color: "var(--ink2)", fontSize: "15px" }}
+        >
+          같은 시술도 병원과의 궁합이 맞아야 더 좋은 결과를 기대할 수 있어요.
+          <br />
+          뷰티궁합은 나와 궁합이 맞는 병원을 찾아드리는 서비스예요.
+        </p>
+
+        <div className="flex justify-center gap-10">
+          {STATS.map((s) => (
+            <div key={s.label} className="flex flex-col items-center gap-1">
+              <span
+                className="font-['Noto_Serif_KR'] font-semibold"
+                style={{ color: "var(--ink)", fontSize: "clamp(15px, 2vw, 18px)" }}
+              >
+                {s.value}
+              </span>
+              <span
+                className="text-[12px] tracking-wide"
+                style={{ color: "var(--ink3)" }}
+              >
+                {s.label}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ══════════════════════════════════════════
    SECTION 2 — Feature
 ══════════════════════════════════════════ */
 const FEATURES = [
@@ -290,6 +347,7 @@ export default function HomePage() {
       </Head>
       <main>
         <HeroSection />
+        <IntroSection />
         <FeatureSection />
         <HowItWorksSection />
         <ResultPreviewSection />
