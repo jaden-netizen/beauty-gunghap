@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import CompatibilityResult from "@/components/features/CompatibilityResult";
 
 type Step = "info" | "search" | "result";
@@ -12,6 +13,7 @@ const STEPS = [
 ];
 
 export default function AnalyzePage() {
+  const router = useRouter();
   const [step, setStep] = useState<Step>("info");
 
   // 폼 상태
