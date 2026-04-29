@@ -84,19 +84,21 @@ export default function Header() {
         {/* 우측 영역 */}
         {user ? (
           <div className="flex items-center gap-3">
-            {/* 아바타 */}
-            <div
-              className="w-8 h-8 rounded-full flex items-center justify-center text-[13px] font-medium"
+            <Link
+              href="/mypage"
+              className="transition-colors"
               style={{
-                background: "rgba(184,146,74,0.15)",
-                border: "0.5px solid var(--gold)",
-                color: "var(--gold)",
+                padding: "7px 20px",
+                borderRadius: "2px",
+                fontSize: "13px",
+                fontWeight: 400,
+                background: "var(--gold)",
+                border: "none",
+                color: "white",
               }}
-              title={user.email}
             >
-              {avatarLetter}
-            </div>
-            {/* 로그아웃 */}
+              마이페이지
+            </Link>
             <button
               onClick={handleSignOut}
               className="text-[12px] tracking-wide transition-colors"
