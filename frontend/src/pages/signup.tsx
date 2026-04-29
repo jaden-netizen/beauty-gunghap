@@ -39,14 +39,6 @@ function EyeIcon({ open }: { open: boolean }) {
   );
 }
 
-function CheckIcon() {
-  return (
-    <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-      <circle cx="24" cy="24" r="23" stroke="#B8924A" strokeWidth="1"/>
-      <path d="M14 24l8 8 12-14" stroke="#B8924A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-    </svg>
-  );
-}
 
 export default function SignupPage() {
   const router = useRouter();
@@ -99,31 +91,8 @@ export default function SignupPage() {
           className="w-full max-w-md bg-white rounded-sm px-10 py-12"
           style={{ boxShadow: "0 2px 40px rgba(0,0,0,0.06)", border: "0.5px solid var(--cream3)" }}
         >
-          {done ? (
-            /* 가입 성공 메시지 */
-            <div className="flex flex-col items-center text-center py-4">
-              <CheckIcon />
-              <h2
-                className="font-['Noto_Serif_KR'] font-light text-[20px] mt-6 mb-3"
-                style={{ color: "var(--ink)" }}
-              >
-                이메일을 확인해주세요
-              </h2>
-              <p className="text-[13px] leading-[2]" style={{ color: "var(--ink3)" }}>
-                <strong style={{ color: "var(--ink2)" }}>{email}</strong>으로<br />
-                인증 링크를 보냈습니다.<br />
-                링크를 클릭하면 로그인할 수 있어요.
-              </p>
-              <Link
-                href="/login"
-                className="btn-primary text-[13px] mt-8 justify-center"
-              >
-                로그인 페이지로
-              </Link>
-            </div>
-          ) : (
-            <>
-              {/* 로고 */}
+          <>
+            {/* 로고 */}
               <div className="flex flex-col items-center mb-8">
                 <img src="/logo.svg" alt="뷰티궁합" className="w-14 h-14 mb-4" />
                 <h1
@@ -253,8 +222,7 @@ export default function SignupPage() {
                   로그인
                 </Link>
               </p>
-            </>
-          )}
+          </>
         </div>
       </div>
     </>
