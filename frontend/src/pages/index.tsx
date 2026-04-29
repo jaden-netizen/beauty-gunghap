@@ -134,9 +134,9 @@ function FeatureSection() {
    SECTION 3 — How it Works
 ══════════════════════════════════════════ */
 const STEPS = [
-  { num: "01", title: "내 정보 입력", desc: "생년월일시와 관심 진료과목을 입력해요.", icon: "✍️" },
-  { num: "02", title: "병원 검색",    desc: "병원명·지역으로 검색하거나 Best 3를 요청해요.", icon: "🔍" },
-  { num: "03", title: "궁합 결과",    desc: "오행 분석·점수·추천 시기를 한눈에 확인해요.", icon: "✨" },
+  { num: "01", title: "내 정보 입력",               desc: "생년월일시와 관심 진료과목을 입력해요.", icon: "✍️" },
+  { num: "02", title: "병원 검색",                  desc: "병원명으로 병원을 검색하고 선택해요.", icon: "🔍" },
+  { num: "03", title: "선택한 병원과의 궁합 결과 확인", desc: "궁합 결과와 시술 추천 시기를 한눈에 확인해요.", icon: "✨" },
 ];
 
 function StepCard({ s, delay }: { s: typeof STEPS[0]; delay: string }) {
@@ -159,7 +159,7 @@ function HowItWorksSection() {
   return (
     <section className="py-28" style={{ background: "var(--night)" }}>
       <div className="max-w-4xl mx-auto px-6">
-        <div ref={ref} className="reveal"><SectionLabel en="How it Works" ko="3단계로 알아보는 나의 병원 운" dark /></div>
+        <div ref={ref} className="reveal"><SectionLabel en="How it Works" ko="3단계로 알아보는 나와 병원의 궁합" dark /></div>
         <div className="grid md:grid-cols-3 gap-8 relative">
           <div className="hidden md:block absolute top-10 left-[33%] right-[33%] h-px"
             style={{ background: "linear-gradient(to right, rgba(184,146,74,0.1), rgba(184,146,74,0.35), rgba(184,146,74,0.1))" }} />
